@@ -1,0 +1,190 @@
+<mvc:View
+    controllerName="bookscapmfreestyleui5.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+    >
+        <content>
+            <core:Fragment
+                fragmentName="bookscapmfreestyleui5.fragments.Header"
+                type="XML"
+            />
+            <Link
+                text="Home"
+                press="_backHome"
+            />
+            <Link width="30px" />
+            <VBox>
+                <Button
+                    text="Create New Record"
+                    press="_CreateNewRecord"
+                />
+                <Button
+                    text="Update Existing Record"
+                    press="_updateExistingRecord"
+                />
+                <Button
+                    text="Delete Existing Record"
+                    press="_deleteExistingRecord"
+                />
+                <Button
+                    text="Batch Update"
+                    press="_batchUpdate"
+                />
+                <Button
+                    text="Create With a Fragment"
+                    press="_createFragment"
+                />
+                <Button
+                    text="Header Item CRUD"
+                    press="_headerItemCrud"
+                />
+                <HBox width="100%">
+                    <SearchField
+                        search="onSearch"
+                        id="idSearchValue"
+                        liveChange="onSearch"
+                        placeholder="Enter few characters..."
+                    />
+                    <Input
+                        id="idBooksVH"
+                        width="95%"
+                        showValueHelp="true"
+                        valueHelpRequest="_onBookValueHelp"
+                    />
+                    <Button
+                        icon="sap-icon://refresh"
+                        press="_resetBooksTable"
+                    />
+                </HBox>
+                <Table
+                    id="booksTable"
+                    mode="SingleSelectLeft"
+                    items="{book>/BooksSet}"
+                    selectionChange="_showChapters"
+                >
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <Title
+                                text="Books List"
+                                level="H1"
+                            />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column>
+                            <Text text="Title" />
+                        </Column>
+                        <Column>
+                            <Text text="Author" />
+                        </Column>
+                        <Column>
+                            <Text text="Price" />
+                        </Column>
+                        <Column>
+                            <Text text="Disc Price" />
+                        </Column>
+                        <Column>
+                            <Text text="Published Date" />
+                        </Column>
+                        <Column>
+                            <Text text="Book Suitable Gender" />
+                        </Column>
+                        <Column>
+                            <Text text="Book Suits for" />
+                        </Column>
+                        <Column>
+                            <Text text="Status" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem
+                            type="Navigation"
+                            press="onItemPress"
+                            highlight="{path:'book>status',formatter:'.formatter.formatRowHighlight'}"
+                        >
+                            <cells>
+                                <Text text="{book>title}" />
+                                <Text text="{book>author}" />
+                                <Text
+                                    text="{path:'book>price',formatter:'.formatter.formatPrice'}"
+                                />
+                                <!-- &gt; , &lt; , &amp;$amp; -->
+                                <!-- <ObjectStatus
+                                    text="{=${book>price} &gt; 300 ? Number(${book>price}-(${book>price}*15)/100).toFixed(2) : ${book>price}}"
+                                    state="{=${book>price} &gt; 300 ? 'Success' : 'Error'}"
+                                    icon="{=${book>price} &gt; 300 ? 'sap-icon://accept' : 'sap-icon://error'}"
+                                    inverted="true"
+                                /> -->
+                                <ObjectStatus
+                                    text="{parts:[{path:'book>price'},{path:'book>ageGroup'}],formatter:'.formatter.formatPriceBand'}"
+                                    inverted="true"
+                                    state="{parts:[{path:'book>price'},{path:'book>ageGroup'}],formatter:'.formatter.formatPriceBandState'}"
+                                />
+                                <Text
+                                    text="{path:'book>publishedDate',formatter:'.formatter.formatDate2'}"
+                                />
+                                <Text text="{book>gender}" />
+                                <Text text="{book>ageGroup}" />
+                                <!-- <ObjectStatus
+                                    text="{=${book>status} === 'C' ? 'Completed' : (${book>status} === 'I'?'In Progress':'Not Started')}"
+                                    icon="{=${book>status} === 'C' ? 'sap-icon://accept' : (${book>status} === 'I'?'sap-icon://pending':'sap-icon://alert')}"
+                                    state="{=${book>status} === 'C' ? 'Success' : (${book>status} === 'I'?'Warning':'Error')}"
+                                    inverted="true"
+                                />
+                                <core:Icon
+                                    src="{=${book>status} === 'C' ? 'sap-icon://accept' : (${book>status} === 'I'?'sap-icon://pending':'sap-icon://alert')}"
+                                    color="{=${book>status} === 'C' ? 'green' : (${book>status} === 'I'?'blue':'red')}"
+                                /> -->
+                                <core:Icon
+                                    src="{path:'book>status',formatter:'.formatter.formatStatusIcon'}"
+                                    color="{path:'book>status',formatter:'.formatter.formatStatusColor'}"
+                                    hoverBackgroundColor="yellow"
+                                />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+            <Table
+                id="chapterTable"
+                items="{ch>/}"
+            >
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <content>
+                            <Title
+                                text="Chapters"
+                                level="H1"
+                            />
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column>
+                        <Text text="Title" />
+                    </Column>
+                    <Column>
+                        <Text text="Pages" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{ch>title}" />
+                            <Text text="{ch>pages}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+            <core:Fragment
+                fragmentName="bookscapmfreestyleui5.fragments.Footer"
+                type="XML"
+            />
+        </content>
+    </Page>
+</mvc:View>

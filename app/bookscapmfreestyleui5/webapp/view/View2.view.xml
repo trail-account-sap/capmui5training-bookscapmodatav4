@@ -1,0 +1,47 @@
+<mvc:View
+    controllerName="bookscapmfreestyleui5.controller.View2"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Page
+        id="page2"
+        title="Chapters"
+    >
+    <core:Fragment
+            fragmentName="bookscapmfreestyleui5.fragments.Header"
+            type="XML"
+        />
+        <Link width="30px" />
+        <Link
+            text="Home"
+            press="_backHome"
+        />
+        <Link width="30px" />
+        <Link
+            text="Back"
+            press="_backToView1"
+        />
+        <Link width="30px" />
+        <Link
+            text="Cancel"
+            press="_cancelToHome"
+        />
+        <content>
+            <List
+                headerText="Chapters"
+                headerLevel="H2"
+                items="{path :'chapters'}"
+            >
+                <StandardListItem
+                    title="{title}"
+                    counter="{pages}"
+                />
+            </List>
+            <core:Fragment
+                fragmentName="bookscapmfreestyleui5.fragments.Footer"
+                type="XML"
+            />
+        </content>
+    </Page>
+</mvc:View>
